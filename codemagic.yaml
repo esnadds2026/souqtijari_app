@@ -1,0 +1,29 @@
+workflows:
+  souqtijari-workflow:
+    name: SouqTijari Build
+    max_build_duration: 60
+
+    environment:
+      flutter: stable
+
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter pub get
+
+      - name: Build Android App Bundle
+        script: |
+          flutter build appbundle --release
+
+      - name: Build Android APK
+        script: |
+          flutter build apk --release
+
+      - name: Build iOS
+        script: |
+          flutter build ios --release --no-codesign
+
+    artifacts:
+      - build/**/outputs/**/*.aab
+      - build/**/outputs/**/*.apk
+      - build/ios/iphoneos/*.app
